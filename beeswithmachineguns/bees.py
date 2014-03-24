@@ -234,6 +234,8 @@ def _attack(params):
             options += ' -k -T "%(mime_type)s; charset=UTF-8" -p /tmp/honeycomb' % params
 
 
+        if params['keep_alive']:
+            options += ' -k'
         if params['cookies'] is not '':
             options += ' -H \"Cookie: %ssessionid=NotARealSessionID;\"' % params['cookies']
         else:
@@ -414,6 +416,7 @@ def attack(url, n, c, **options):
     csv_filename = options.get("csv_filename", '')
     cookies = options.get('cookies', '')
     post_file = options.get('post_file', '')
+    keep_alive = options.get('keep_alive', False)
 
     if csv_filename:
         try:
@@ -470,6 +473,7 @@ def attack(url, n, c, **options):
             'headers': headers,
             'cookies': cookies,
             'post_file': options.get('post_file'),
+            'keep_alive': options.get('keep_alive'),
             'mime_type': options.get('mime_type', ''),
             'tpr': options.get('tpr'),
             'rps': options.get('rps')
